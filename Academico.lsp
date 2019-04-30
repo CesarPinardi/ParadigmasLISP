@@ -47,20 +47,31 @@
 (DEFUN PROFESSORES? (BD)
 
 (if (null (car BD))
-	(cdr BD)
-(cddar BD))
+	(cddar BD)
+	(PROFESSORES? (cdr BD))
 
+)
 )
 
 
 (DEFUN DISCIPLINAS? (BD)
+(cdr (caar BD))
+;(if (null (cdr BD))
+	;nil
+	;(DISCIPLINAS? (cdr BD)))
 
-
+	
 )
 
+(DEFUN MATRICULADOS? (DISCIPLINA TURMA BD)
 
-(DEFUN MATRICULADOS? (BD)
-
+(if (= DISCIPLINA (caar BD))
+	(if (= TURMA (car (car (car (cdr (car BD))))))
+		(cdr (car (car (cdr (car BD)))))
+		(if (= TURMA (car (car (cdr (car (cdr (car BD)))))))
+		(cdr (car (cdr (car (cdr (car BD)))))))
+	)
+)
 )
 
 
