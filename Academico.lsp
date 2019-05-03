@@ -38,43 +38,53 @@
 (DEFUN ALUNOS? (BD)
 
 (if (null (car BD))
-	(cdr BD)
-	(cdr (car (car (cdr (car BD))))))
+	nil
+	(cons (cdr (car (car (cdr (car BD))))) (ALUNOS? (cdr BD))))
 
 )
 
 
 (DEFUN PROFESSORES? (BD)
-
 (if (null (car BD))
-	(cddar BD)
-	(PROFESSORES? (cdr BD))
+	nil
+	(cons (cddar BD) (PROFESSORES? (cdr BD))))
+
 
 )
-)
+
 
 
 (DEFUN DISCIPLINAS? (BD)
-(cdr (caar BD))
-;(if (null (cdr BD))
-	;nil
-	;(DISCIPLINAS? (cdr BD)))
+(if (null (car BD))
+	nil
+	(cons (caar BD) (DISCIPLINAS? (cdr BD))))
 
 	
 )
 
 (DEFUN MATRICULADOS? (DISCIPLINA TURMA BD)
+(if (null (car BD))
+	nil
+	(if (eql DISCIPLINA (caar BD))
+		(if (eql TURMA 1)
+			(cdaar (cdar BD)) 
+			(if (eql TURMA 2)
+			(cddadr (car BD))
+				'TURMA 'INVALIDA)
+		)
+	(MATRICULADOS? DISCIPLINA TURMA (cdr BD)))
+)
+)
 
-(if (= DISCIPLINA (caar BD))
-	(if (= TURMA (car (car (car (cdr (car BD))))))
-		(cdr (car (car (cdr (car BD)))))
-		(if (= TURMA (car (car (cdr (car (cdr (car BD)))))))
-		(cdr (car (cdr (car (cdr (car BD)))))))
+(DEFUN VINCULADOS? (DISCIPLINA BD) 
+(if (null (car BD))
+	nil
+	(if (eql DISCIPLINA (caar BD))
+		(cddar BD)
+		(VINCULADOS? DISCIPLINA (cdr BD))
 	)
 )
 )
-
-
 (DEFUN CURSA? (ALUNO BD)
 
 )
